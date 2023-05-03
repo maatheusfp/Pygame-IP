@@ -1,30 +1,43 @@
 import pygame
 
-tyle = (30,30)
+screenWidth, screenHeight = 1920, 1080
 
-layout = [['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-          ['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-          ['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-          ['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-          ['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-          ['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-          ['.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.'],
-          ['X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X']]
+layout = ['................',
+          '................',
+          '................',
+          '................',
+          'xxxxxxxxxxx.....',
+          '................',
+          '................',
+          '..............xx',
+          '................',
+          'xxxxxxxxxxxxxxxx'
+          ]
 
 class Level1():
-    def __init__(self):
-        self.posicoesValidas = list()
+    def __init__(self,largura, altura):
+        self.largura = largura
+        self.altura = altura
 
-        linhaCoord = 0
+        self.posicoesValidas = []  
+
+    def desenhar(self):
+        self.tela = pygame.display.set_mode((self.largura, self.altura),0)
+
+        blocoWidth = self.largura / 16
+        blocoHeight = self.altura / 12
         for linha in enumerate(layout):
-            valorCoord = 0
-            for valor in linha:
-                if valor == 'X':
-                    x = valorCoord * tyle[0]
-                    y = linhaCoord * tyle[1]
-                    self.posicoesValidas.append(x,y)
-                    
-                valorCoord += 1
+            for coluna in range(0,16):
+                x = coluna * blocoWidth
+                y = linha[0] * blocoHeight
+                bloco = layout[linha[0]][coluna]
+                cor = (0,0,0)
 
-            linhaCoord += 1
+                if bloco == "x":
+                    bloco_rect = pygame.Rect((x,y),(blocoWidth, blocoHeight))
+                    cor = (255, 255, 0)
+                    self.posicoesValidas.append(bloco_rect)
 
+                pygame.draw.rect(self.tela, cor, ((x,y),(blocoWidth, blocoHeight)), 2)
+        
+        pygame.display.update()

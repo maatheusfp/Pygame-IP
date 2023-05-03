@@ -1,56 +1,77 @@
 import pygame 
 
 class Player():
-    def __init__(self):
+    def __init__(self, x, y, level):
         #coordenadas
-        self.x = int()
-        self.y = int()
-        self.direcao = pygame.math.Vector2(0,0)  #pra gravidade
+        self.x = x
+        self.y = y
 
         #movimento
+        self.direcao = pygame.math.Vector2(0,0)
         self.velocidade = 6
-        self.gravidade = 0.9
-        self.esquerda = False
-        self.direita = False
-        self.noAr = True
+        self.gravidade = 0.09
+        self.noAr = False
 
         #caracteristicas
-        self.player_rect = pygame.Rect((100,100),(30,30))
+        self.rect = pygame.Rect((self.x,self.y),(100,100))
+
+        #colisao
+        self.posicaoValida = level.posicoesValidas
 
     def movimentacao(self):
-        velocidadePulo = 15
-        self.pulando = False
+        velocidadePulo = -6
+        """ self.pulando = False """
 
-        #Para apertar apenas um botão por vez
-        if pygame.key.get_pressed()[pygame.K_RIGHT]:  
+        if pygame.key.get_pressed()[pygame.K_RIGHT]: 
             self.direcao.x = 1
-            self.esquerda = False
-            self.direita = True
         
         elif pygame.key.get_pressed()[pygame.K_LEFT]:
             self.direcao.x = -1
-            self.direita = False
-            self.esquerda = True
         
         else:
             self.direcao.x = 0
-            self.esquerda = False
-            self.direita = False
         
         #Para não dar um pulo duplo
         if pygame.key.get_pressed()[pygame.K_SPACE] and not self.noAr:
-            self.pulando = True
+            self.direcao.y = velocidadePulo
+            """ self.pulando = True """
 
-        if self.pulando:
-            self.direcao.y = -velocidadePulo
+        """ if self.pulando:
+            self.y = -velocidadePulo
             self.noAr = True
-            self.pulando = False
-        
-        if self.direita:
-            self.x += self.velocidade
-        
-        if self.esquerda: 
-            self.x -= self.velocidade
+            self.pulando = False """
         
     def gravitacao(self):
         self.direcao.y += self.gravidade
+        self.rect.y += self.direcao.y
+
+    def desenhaJogador(self, screen):
+        cor = (255, 255, 255)
+        pygame.draw.rect(screen, cor, self.rect)
+        pygame.display.update()
+    
+    def colisaoHorizontal(self):
+        for sprite in self.posicaoValida:
+            if self.rect.colliderect(sprite):
+                if self.direcao.x < 0:
+                    self.direcao.x = 1
+                
+                elif self.direcao.x > 0:
+                    self.direcao.x = -1
+    
+    def colisaoVertical(self):
+        for sprite in self.posicaoValida:
+            if self.rect.colliderect(sprite):
+                if self.direcao.y < 0:
+                    self.direcao.y = -0.09
+                
+                elif self.direcao.y > 0:
+                    self.direcao.y = 0.09
+
+
+    def atualiza(self):
+        self.colisaoVertical()
+        self.colisaoHorizontal()
+        self.movimentacao()
+        self.rect.x += self.direcao.x * self.velocidade
+        self.gravitacao()
