@@ -18,8 +18,8 @@ class Level1():
     def __init__(self,largura, altura):
         self.largura = largura
         self.altura = altura
-
         self.posicoesValidas = []  
+
 
     def desenhar(self):
         self.tela = pygame.display.set_mode((self.largura, self.altura),0)
