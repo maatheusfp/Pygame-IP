@@ -1,29 +1,45 @@
-import pygame as pg
+import pygame 
 from character.player import Player
-from levels.maps import Level1
- 
-screenWidth, screenHeight = 1920, 1080 # 1920x1080 (Full HD)
-pg.display.set_caption("Jogo Plataforma") # Nome da janela
+from levels.maps import *
+import sys
 
-pg.init()
+pygame.display.set_caption("Jogo Plataforma") # Nome da janela
 
-clock = pg.time.Clock() #frames por segundo
+pygame.init()
+
+clock = pygame.time.Clock() #frames por segundo
+obstacles = []
+screen = pygame.display.set_mode((screenWidth, screenHeight))
+
+x = y = 0
+for row in layout:
+    for col in row:
+        if col == 'x':
+            obstacle_rect = pygame.Rect(x, y, tile_Width, tile_Height)
+            obstacles.append(obstacle_rect)
+        if col == 'P':
+            player_rect = pygame.Rect(x, y, tile_Width, tile_Height)
+        
+        x += tile_Width
+    y += tile_Height
+    x = 0 
+player = Player(player_rect.x, player_rect.y, player_rect.width, player_rect.height)
 
 def main():
-    level = Level1(screenWidth, screenHeight)
-    player = Player(100,100, level)
-    run = True
-    # Loop que executa o jogo
-    while run:
-        for entrada in pg.event.get(): # Faz uma lista de todos os eventos capturados pelo pygame do teclado, mouse, etc.
-            if entrada.type == pg.QUIT:
-                pg.quit()
-                exit()
-        
-        level.desenhar()
-        player.desenhaJogador(level.tela)
-        player.atualiza()
-        clock.tick(60)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        player.controle(obstacles)
+
+        screen.fill((255, 255, 255))
+        for obstacle in obstacles:
+            pygame.draw.rect(screen, (0, 0, 255), obstacle)
+        player.draw(screen)
+        clock.tick(100)
+        pygame.display.update()
 
 
 if __name__ == "__main__":
