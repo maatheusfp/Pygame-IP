@@ -40,5 +40,5 @@ class GameBackground:
 
         pygame.quit()
 
-game = GameBackground(1920, 1080)
+game = GameBackground(1920, 900)
 game.run()

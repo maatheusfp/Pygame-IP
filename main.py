@@ -1,6 +1,7 @@
 import pygame 
 from character.player import Player
 from levels.maps import *
+from assets.background import GameBackground
 import sys
 
 pygame.display.set_caption("Jogo Plataforma") # Nome da janela
@@ -23,6 +24,7 @@ for row in layout:
         x += tile_Width
     y += tile_Height
     x = 0 
+game_background = GameBackground(screenWidth, screenHeight)
 player = Player(player_rect.x, player_rect.y, player_rect.width, player_rect.height)
 
 def main():
@@ -34,10 +36,14 @@ def main():
 
         player.controle(obstacles)
 
-        screen.fill((255, 255, 255))
+        game_background.update()
+        screen.blit(game_background.screen, (0, 0))
+        
         for obstacle in obstacles:
             pygame.draw.rect(screen, (0, 0, 255), obstacle)
+            
         player.draw(screen)
+        
         clock.tick(100)
         pygame.display.update()
 
