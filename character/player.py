@@ -8,8 +8,7 @@ class Player():
 
         #velocidades 
         self.velocidade = 4
-        """ self.gravidade = 0.09 """
-        """ self.noAr = False """
+        self.aceleracao = 2
     
     def moveX(self, dx):
         self.rect.x += dx * self.velocidade
@@ -35,18 +34,16 @@ class Player():
                 if dy == -1 and obstacle.bottom >= player_rect.top:
                     return True
         return False
-    '''
-    def inteact(self, itens):
-        for item in itens:
-            if self.rect.colliderect(item): # Booleana que retorna True se o jogador colidir com o item
-                if item == "key":
-                    collision_key = True
-                if item == "door":
-                    collision_door = True
-                if item == "time":
-                    collision_time = True
-    '''
+
+    def gravidade(self, obstacles):
+        if not self.check_collision(self.rect, obstacles, 0, 1):
+            dy = 1
+            self.rect.y += dy * self.aceleracao
+
     def controle(self, obstacles):
+
+        self.gravidade(obstacles)
+
         keys = pygame.key.get_pressed()
         dx, dy = 0, 0
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
@@ -66,10 +63,6 @@ class Player():
             self.direcao.y = 1
             self.direcao.x = 0
 
-        if pygame.key.get_pressed()[pygame.K_ESCAPE]:
-            pygame.quit()
-            quit()
-
         if not self.check_collision(self.rect, obstacles, dx, 0):
             self.moveX(dx)
 
@@ -77,7 +70,3 @@ class Player():
             self.moveY(dy)
 
         return dx, dy
-
-    """ def gravitacao(self):
-        self.direcao.y += self.gravidade
-        self.rect.y += self.direcao.y """
