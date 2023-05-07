@@ -1,14 +1,5 @@
 import pygame
 
-andando_direita = [pygame.image.load('assets/characterSprites/R1.png'), 
-                   pygame.image.load('assets/characterSprites/R2.png'), 
-                   pygame.image.load('assets/characterSprites/R3.png'), 
-                   pygame.image.load('assets/characterSprites/R4.png'), 
-                   pygame.image.load('assets/characterSprites/R5.png'), 
-                   pygame.image.load('assets/characterSprites/R6.png'), 
-                   pygame.image.load('assets/characterSprites/R7.png'), 
-                   pygame.image.load('assets/characterSprites/R8.png')]
-
 R1 = pygame.image.load("assets/characterSprites/R1.png")
 R2 = pygame.image.load("assets/characterSprites/R2.png")
 R3 = pygame.image.load("assets/characterSprites/R3.png")
@@ -17,6 +8,8 @@ R5 = pygame.image.load("assets/characterSprites/R5.png")
 R6 = pygame.image.load("assets/characterSprites/R6.png")
 R7 = pygame.image.load("assets/characterSprites/R7.png")
 R8 = pygame.image.load("assets/characterSprites/R8.png")
+
+andando_direita = [R1, R2, R3, R4, R5, R6, R7, R8]
 
 andando_esquerda = [pygame.transform.flip(R1, True, False), 
                     pygame.transform.flip(R2, True, False), 
