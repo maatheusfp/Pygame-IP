@@ -63,6 +63,10 @@ class Player():
             self.direcao.y = 1
             self.direcao.x = 0
 
+        if pygame.key.get_pressed()[pygame.K_ESCAPE]:
+            pygame.quit()
+            quit()
+
         if not self.check_collision(self.rect, obstacles, dx, 0):
             self.moveX(dx)
 
