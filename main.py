@@ -6,7 +6,8 @@ import sys
 
 pygame.display.set_caption("Jogo Plataforma") # Nome da janela
 
-pygame.init()
+if __name__ == '__main__':
+    pygame.init()
 
 clock = pygame.time.Clock() #frames por segundo
 obstacles = []
