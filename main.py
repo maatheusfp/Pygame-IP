@@ -81,16 +81,6 @@ def main():
             pygame.draw.rect(screen, (0, 0, 255), obstacle)
             
         player.draw(screen)
-        
-        #texto para mostrar quantidade de coletaveis (requisito)
-        """ text_rect = pygame.Rect((700,100), (200,200))
-        font = pygame.font.SysFont('Arial', 20)
-        text = font.render(f'Keys coletadas: {len(qtdKeys)}, Timers coletados: {len(qtdTime)}', True, (255,255,255))
-        text_surface = pygame.Surface((text_rect.width, text_rect.height))
-        text_surface.fill((0,0,0))
-        text_surface.blit(text, (0,0))
-        screen.blit(text_surface, text_rect) """
-
 
         clock.tick(100)
         pygame.display.update()
