@@ -35,7 +35,17 @@ class Player():
                 if dy == -1 and obstacle.bottom >= player_rect.top:
                     return True
         return False
-
+    '''
+    def inteact(self, itens):
+        for item in itens:
+            if self.rect.colliderect(item): # Booleana que retorna True se o jogador colidir com o item
+                if item == "key":
+                    collision_key = True
+                if item == "door":
+                    collision_door = True
+                if item == "time":
+                    collision_time = True
+    '''
     def controle(self, obstacles):
         keys = pygame.key.get_pressed()
         dx, dy = 0, 0
