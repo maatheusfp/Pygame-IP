@@ -29,18 +29,22 @@ class Player():
 
         # Booleanas
         self.pulando = False
-        self.contagem_pulo = 10
+        self.contagem_pulo = 100
         self.esquerda = False
         self.direita = False
         self.contagem_passos = 0
 
         #velocidades 
-        self.velocidade = 4
+        self.velocidade = 2
+        self.velocidade_Y = 4
         self.aceleracao = 2
 
-#		self.image = self.images_right[self.index]
-#		self.rect = self.image.get_rect()
-#		screen.blit(self.image, self.rect)
+        #variáveis de controle de pulo
+        self.pulando = False
+        self.altura_pulo = 100
+        self.contador_pulo = 0
+        self.podePular = True
+
     
     def draw(self, surface):
 
@@ -63,13 +67,15 @@ class Player():
     
 
     def moveY(self, dy):
-        self.rect.y += dy * self.velocidade
+        self.rect.y += dy * self.velocidade_Y
 
+    # def draw(self, surface):
+    #     pygame.draw.rect(surface, (255, 0, 0), self.rect)
 
     def check_collision(self, player_rect, obstacles, dx, dy):
         temp_rect = player_rect.copy()
         temp_rect.x += dx * self.velocidade
-        temp_rect.y += dy * self.velocidade
+        temp_rect.y += dy * self.velocidade_Y
         for obstacle in obstacles:
             if temp_rect.colliderect(obstacle):    #ele verifica o lado em que está tendo a colisão
                 if dx == 1 and obstacle.left <= player_rect.right:
@@ -87,6 +93,10 @@ class Player():
         if not self.check_collision(self.rect, obstacles, 0, 1):
             dy = 1
             self.rect.y += dy * self.aceleracao
+            self.podePular = False
+
+        else:
+            self.podePular = True
 
 
     def controle(self, obstacles):
@@ -112,7 +122,7 @@ class Player():
             self.direita = False
             self.contagem_passos = 0
 
-        if keys[pygame.K_UP] or keys[pygame.K_w]:
+        if keys[pygame.K_UP] or keys[pygame.K_w] or keys[pygame.K_SPACE]:
             dy = -1
             self.direcao.y = -1
             self.direcao.x = 0
@@ -130,5 +140,17 @@ class Player():
 
         if not self.check_collision(self.rect, obstacles, 0, dy):
             self.moveY(dy)
+
+        if self.pulando:
+            dy = -1
+            self.contador_pulo += 1
+            if self.contador_pulo > self.altura_pulo:
+                self.pulando = False
+
+        if not self.check_collision(self.rect, obstacles, dx, 0):
+            self.moveX(dx)
+
+        if not self.check_collision(self.rect, obstacles, 0, dy):
+            self.moveY(dy) 
 
         return dx, dy
