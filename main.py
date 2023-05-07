@@ -10,6 +10,16 @@ pygame.init()
 clock = pygame.time.Clock() #frames por segundo
 obstacles = []
 screen = pygame.display.set_mode((screenWidth, screenHeight))
+from levels.maps import *
+import sys
+
+pygame.display.set_caption("Jogo Plataforma") # Nome da janela
+
+pygame.init()
+
+clock = pygame.time.Clock() #frames por segundo
+obstacles = []
+screen = pygame.display.set_mode((screenWidth, screenHeight))
 
 x = y = 0
 for row in layout:
@@ -19,6 +29,8 @@ for row in layout:
             obstacles.append(obstacle_rect)
         if col == 'P':
             player_rect = pygame.Rect(x, y, tile_Width, tile_Height)
+        if col == 'I':
+            itens_rect = pygame.Rect(x, y, tile_Width, tile_Height)
         
         x += tile_Width
     y += tile_Height
@@ -38,6 +50,7 @@ def main():
         for obstacle in obstacles:
             pygame.draw.rect(screen, (0, 0, 255), obstacle)
         player.draw(screen)
+        pygame.draw.rect(screen, (0, 255, 0), itens_rect)
         clock.tick(100)
         pygame.display.update()
 
