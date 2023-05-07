@@ -8,8 +8,7 @@ class Player():
 
         #velocidades 
         self.velocidade = 4
-        """ self.gravidade = 0.09 """
-        """ self.noAr = False """
+        self.aceleracao = 2
     
     def moveX(self, dx):
         self.rect.x += dx * self.velocidade
@@ -36,22 +35,30 @@ class Player():
                     return True
         return False
 
+    def gravidade(self, obstacles):
+        if not self.check_collision(self.rect, obstacles, 0, 1):
+            dy = 1
+            self.rect.y += dy * self.aceleracao
+
     def controle(self, obstacles):
+
+        self.gravidade(obstacles)
+
         keys = pygame.key.get_pressed()
         dx, dy = 0, 0
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             dx = -1
             self.direcao.x = -1
             self.direcao.y = 0
-        elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             dx = 1
             self.direcao.x = 1
             self.direcao.y = 0
-        elif keys[pygame.K_UP] or keys[pygame.K_w]:
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
             dy = -1
             self.direcao.y = -1
             self.direcao.x = 0
-        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             dy = 1 
             self.direcao.y = 1
             self.direcao.x = 0
@@ -63,8 +70,4 @@ class Player():
             self.moveY(dy)
 
         return dx, dy
-
-    """ def gravitacao(self):
-        self.direcao.y += self.gravidade
-        self.rect.y += self.direcao.y """
 
