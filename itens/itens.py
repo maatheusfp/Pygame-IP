@@ -51,6 +51,7 @@ class Mochila:
 class Door:
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect((x, y), (width, height))
+
         self.image = pygame.image.load('assets/parada.png')
         self.temMochila = False
         self.temChave = False
