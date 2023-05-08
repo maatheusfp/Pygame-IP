@@ -14,6 +14,8 @@ clock = pygame.time.Clock() #frames por segundo
 screen = pygame.display.set_mode((screenWidth, screenHeight))
 game_background = GameBackground(screenWidth, screenHeight)
 
+plataforma = pygame.image.load('assets/plataforma.png')
+
 obstacles = []
 itensKeys = []
 itensMochila = []
@@ -26,7 +28,7 @@ for row in layout:
             obstacle_rect = pygame.Rect(x, y, tile_Width, tile_Height)
             obstacles.append(obstacle_rect)
         if col == 'P':
-            player_rect = pygame.Rect(x, y, tile_Width, tile_Height)
+            player_rect = pygame.Rect(x, y, tile_Width, tile_Height*2)
         if col == 'm':
             mochila_rect = pygame.Rect(x,y, tile_Width, tile_Height)
             itensMochila.append(mochila_rect)
@@ -66,6 +68,7 @@ def main():
             if mochila_item.colisao(player.rect):
                 itensMochila.remove(mochila)
                 contadorMochila.adiciona()
+                door.temMochila = True
             mochila_item.draw(screen)
         
         for key in itensKeys:
@@ -73,6 +76,7 @@ def main():
             if key_item.colisao(player.rect):
                 itensKeys.remove(key)
                 contadorKeys.adiciona()
+                door.temChave = True
             key_item.draw(screen)
         
         for vem in itensVem:
@@ -80,15 +84,17 @@ def main():
             if vem_item.colisao(player.rect):
                 itensVem.remove(vem)
                 ContadorVem.adiciona()
+                door.temVem = True
             vem_item.draw(screen)
         
         door.draw(screen)
-        if door.colisao(player_rect):
+        if door.colisao(player.rect):
             pygame.quit()
             sys.exit()
+            
 
         for obstacle in obstacles:
-            pygame.draw.rect(screen, (0, 0, 255), obstacle)
+            screen.blit(plataforma, (obstacle.x, obstacle.y))
             
         player.draw(screen)
         contadorKeys.render(screen)
