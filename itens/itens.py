@@ -50,5 +50,3 @@ class Contador:
      def __init__(self, keysColetadas, timerColetados):
           self.font = pygame.font.SysFont('Arial', 20)
           self.rect = pygame.Rect(700, 100, (200,100))
-
-          
