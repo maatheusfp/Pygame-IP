@@ -34,7 +34,6 @@ class Player():
     def __init__(self, x, y, width, height):
         #cria o retangulo do jogador
         self.rect = pygame.Rect((x, y),(width, height))
-        self.direcao = pygame.math.Vector2(0,0)
 
         #velocidades 
         self.velocidade = 2
@@ -53,12 +52,7 @@ class Player():
         self.contador_pulo = 0
         self.podePular = True
 
-#    def draw(self, surface):
-#        pygame.draw.rect(surface, (255, 0, 0), self.rect)
     def draw(self, surface):
-
-#        if self.contagem_passos + 1 >= 25:
-#            self.contagem_passos = 0
         self.contagem_passos = self.contagem_passos % 24
 
         if self.esquerda:
@@ -130,10 +124,6 @@ class Player():
             self.esquerda = False
             self.direita = False
             self.contagem_passos = 0
-        '''else:
-            self.esquerda = False
-            self.direita = False
-            self.contagem_passos = 0'''
 
         if keys[pygame.K_SPACE] and self.podePular and self.rect.y > 0:
             if not self.pulando: 
