@@ -2,7 +2,7 @@ import pygame
 from character.player import Player
 from levels.maps import *
 from assets.background import GameBackground
-from itens.itens import Time, Door, Key
+from itens.itens import Mochila, Door, Key, Vem, ContadorItem
 import sys
 
 pygame.display.set_caption("Jogo Plataforma") # Nome da janela
@@ -15,10 +15,9 @@ screen = pygame.display.set_mode((screenWidth, screenHeight))
 game_background = GameBackground(screenWidth, screenHeight)
 
 obstacles = []
-itens = []
-keys = []
-qtdTime = []
-qtdKeys = []
+itensKeys = []
+itensMochila = []
+itensVem = []
 
 x = y = 0
 for row in layout:
@@ -27,15 +26,16 @@ for row in layout:
             obstacle_rect = pygame.Rect(x, y, tile_Width, tile_Height)
             obstacles.append(obstacle_rect)
         if col == 'P':
-
-            player_rect = pygame.Rect(x, y, tile_Width, tile_Height * 2)
-
-        if col == 't':
-            time_rect = pygame.Rect(x,y, tile_Width, tile_Height)
-            itens.append(time_rect)
+            player_rect = pygame.Rect(x, y, tile_Width, tile_Height)
+        if col == 'm':
+            mochila_rect = pygame.Rect(x,y, tile_Width, tile_Height)
+            itensMochila.append(mochila_rect)
         if col == 'k':
             key_rect = pygame.Rect(x, y, tile_Width, tile_Height)
-            keys.append(key_rect)
+            itensKeys.append(key_rect)
+        if col == 'v':
+            vem_rect = pygame.Rect(x, y, tile_Width, tile_Height)
+            itensVem.append(vem_rect)
         if col == 'd':
             door_rect = pygame.Rect(x, y, tile_Width * 2, tile_Height * 2)
 
@@ -45,7 +45,9 @@ for row in layout:
 
 door = Door(door_rect.x, door_rect.y, door_rect.width, door_rect.height)
 player = Player(player_rect.x, player_rect.y, player_rect.width, player_rect.height)
-
+contadorKeys = ContadorItem(10,10, 'Chaves')
+contadorMochila = ContadorItem(10,35, 'Mochilas')
+ContadorVem = ContadorItem(10,60, 'Vem')
 
 def main():
     while True:
@@ -59,19 +61,26 @@ def main():
         game_background.update()
         screen.blit(game_background.screen, (0, 0))
 
-        for item in itens:
-            time_item = Time(item.x, item.y, item.width, item.height)
-            if time_item.colisao(player.rect):
-                itens.remove(item)
-                qtdTime.append(1)
-            time_item.draw(screen)
+        for mochila in itensMochila:
+            mochila_item = Mochila(mochila.x, mochila.y, mochila.width, mochila.height)
+            if mochila_item.colisao(player.rect):
+                itensMochila.remove(mochila)
+                contadorMochila.adiciona()
+            mochila_item.draw(screen)
         
-        for key in keys:
-            key_item = Key(key_rect.x, key_rect.y, key_rect.width, key_rect.height)
+        for key in itensKeys:
+            key_item = Key(key.x, key.y, key.width, key.height)
             if key_item.colisao(player.rect):
-                keys.remove(key)
-                qtdKeys.append(1)
+                itensKeys.remove(key)
+                contadorKeys.adiciona()
             key_item.draw(screen)
+        
+        for vem in itensVem:
+            vem_item = Vem(vem.x, vem.y, vem.width, vem.height)
+            if vem_item.colisao(player.rect):
+                itensVem.remove(vem)
+                ContadorVem.adiciona()
+            vem_item.draw(screen)
         
         door.draw(screen)
         if door.colisao(player_rect):
@@ -82,6 +91,9 @@ def main():
             pygame.draw.rect(screen, (0, 0, 255), obstacle)
             
         player.draw(screen)
+        contadorKeys.render(screen)
+        contadorMochila.render(screen)
+        ContadorVem.render(screen)
 
         clock.tick(60)
         pygame.display.update()
