@@ -1,5 +1,3 @@
-import pygame
-
 screenWidth, screenHeight = 1920, 1080 # 1920x1080 (Full HD)
 
 layout = ['................................',
