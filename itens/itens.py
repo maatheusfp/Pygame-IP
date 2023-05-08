@@ -3,7 +3,7 @@ import pygame
 class Vem:
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect((x,y), (width, height))
-        self.image = pygame.image.load("assets/vem.png")
+        self.image = pygame.image.load('assets/vem.png')
         self.coletado = False
 
     def draw(self, surface):
@@ -19,7 +19,7 @@ class Vem:
 class Key:
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect((x,y), (width, height))
-        self.image = pygame.image.load("assets/chave.png")
+        self.image = pygame.image.load('assets/chave.png')
         self.coletado = False
     
     def draw(self, surface):
@@ -35,7 +35,7 @@ class Key:
 class Mochila:
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect((x,y), (width, height))
-        self.image = pygame.image.load("assets/mochila.png")
+        self.image = pygame.image.load('assets/mochila.png')
         self.coletado = False
     
     def draw(self, surface):
@@ -51,7 +51,8 @@ class Mochila:
 class Door:
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect((x, y), (width, height))
-        self.image = pygame.image.load("assets/porta.png")
+
+        self.image = pygame.image.load('assets/parada.png')
         self.temMochila = False
         self.temChave = False
         self.temVem = False

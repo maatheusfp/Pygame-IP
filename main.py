@@ -14,6 +14,8 @@ clock = pygame.time.Clock() #frames por segundo
 screen = pygame.display.set_mode((screenWidth, screenHeight))
 game_background = GameBackground(screenWidth, screenHeight)
 
+plataforma = pygame.image.load('assets/plataforma.png')
+
 obstacles = []
 itensKeys = []
 itensMochila = []
@@ -92,7 +94,7 @@ def main():
             
 
         for obstacle in obstacles:
-            pygame.draw.rect(screen, (0, 0, 255), obstacle)
+            screen.blit(plataforma, (obstacle.x, obstacle.y))
             
         player.draw(screen)
         contadorKeys.render(screen)
