@@ -26,7 +26,7 @@ andando_esquerda = [pygame.transform.flip(R1, True, False),
                     pygame.transform.flip(R6, True, False), 
                     pygame.transform.flip(R7, True, False), 
                     pygame.transform.flip(R8, True, False)]
-parado_direita = pygame.image.load("assets/characterSprites/standing.png")
+parado_direita = pygame.image.load("assets/characterSprites/Standing.png")
 parado_direita = pygame.transform.scale(parado_direita, (60, 120))
 parado_esquerda = pygame.transform.flip(parado_direita, True, False)
 
