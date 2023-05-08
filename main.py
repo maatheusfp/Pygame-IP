@@ -37,8 +37,7 @@ for row in layout:
             vem_rect = pygame.Rect(x, y, tile_Width, tile_Height)
             itensVem.append(vem_rect)
         if col == 'd':
-            door_rect = pygame.Rect(x, y, tile_Width, tile_Height)
-
+            door_rect = pygame.Rect(x, y, tile_Width * 2, tile_Height * 2)
 
         x += tile_Width
     y += tile_Height
@@ -96,8 +95,9 @@ def main():
         contadorMochila.render(screen)
         ContadorVem.render(screen)
 
-        clock.tick(100)
+        clock.tick(60)
         pygame.display.update()
+
 
 if __name__ == "__main__":
     main()

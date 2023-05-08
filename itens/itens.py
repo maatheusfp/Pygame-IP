@@ -61,7 +61,7 @@ class Door:
          if player_rect.colliderect(self.rect) :
 
               return True
-    
+  
 class ContadorItem:
     def __init__(self, x, y, nome):
         self.x = x
@@ -80,3 +80,4 @@ class ContadorItem:
 
 
           
+
