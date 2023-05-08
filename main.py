@@ -27,7 +27,9 @@ for row in layout:
             obstacle_rect = pygame.Rect(x, y, tile_Width, tile_Height)
             obstacles.append(obstacle_rect)
         if col == 'P':
+
             player_rect = pygame.Rect(x, y, tile_Width, tile_Height * 2)
+
         if col == 't':
             time_rect = pygame.Rect(x,y, tile_Width, tile_Height)
             itens.append(time_rect)
@@ -36,7 +38,6 @@ for row in layout:
             keys.append(key_rect)
         if col == 'd':
             door_rect = pygame.Rect(x, y, tile_Width * 2, tile_Height * 2)
-
 
         x += tile_Width
     y += tile_Height
@@ -84,6 +85,7 @@ def main():
 
         clock.tick(60)
         pygame.display.update()
+
 
 if __name__ == "__main__":
     main()
