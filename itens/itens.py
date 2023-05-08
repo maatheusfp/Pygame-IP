@@ -3,12 +3,12 @@ import pygame
 class Vem:
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect((x,y), (width, height))
-        self.color = (255, 255, 0)
+        self.image = pygame.image.load("assets/vem.png")
         self.coletado = False
 
     def draw(self, surface):
         if not self.coletado:
-            pygame.draw.rect(surface, self.color, self.rect)
+            surface.blit(self.image, self.rect)
     
     def colisao(self, player_rect):
             if player_rect.colliderect(self.rect):
@@ -19,12 +19,12 @@ class Vem:
 class Key:
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect((x,y), (width, height))
-        self.color = (230, 0, 125)
+        self.image = pygame.image.load("assets/chave.png")
         self.coletado = False
     
     def draw(self, surface):
          if not self.coletado:
-              pygame.draw.rect(surface, self.color, self.rect)
+              surface.blit(self.image, self.rect)
     
     def colisao(self, player_rect):
          if player_rect.colliderect(self.rect):
@@ -35,12 +35,12 @@ class Key:
 class Mochila:
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect((x,y), (width, height))
-        self.color = (230, 123, 125)
+        self.image = pygame.image.load("assets/mochila.png")
         self.coletado = False
     
     def draw(self, surface):
          if not self.coletado:
-              pygame.draw.rect(surface, self.color, self.rect)
+              surface.blit(self.image, self.rect)
     
     def colisao(self, player_rect):
          if player_rect.colliderect(self.rect):
@@ -51,14 +51,14 @@ class Mochila:
 class Door:
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect((x, y), (width, height))
-        self.color = (0,0,0)
+        self.image = pygame.image.load("assets/porta.png")
         self.temMochila = False
         self.temChave = False
         self.temVem = False
 
 
     def draw(self, surface):
-         pygame.draw.rect(surface, self.color, self.rect)
+         surface.blit(self.image, self.rect)
     
     def colisao(self, player_rect):
          if player_rect.colliderect(self.rect) and self.temMochila and self.temChave and self.temVem:
