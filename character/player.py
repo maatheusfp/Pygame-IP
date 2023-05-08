@@ -115,13 +115,13 @@ class Player():
         self.gravidade(obstacles)
 
         keys = pygame.key.get_pressed()
-        dx, dy = 0, 0
-        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+        dx, dy = 0, 0                                    #colisao com a tela                   
+        if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.rect.x > 0:
             dx = -1
             self.esquerda = True
             self.direita = False
             self.direcao = -1
-        if keys[pygame.K_RIGHT] or keys[pygame.K_d]: #elif
+        if (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and self.rect.x < 1880:
             dx = 1
             self.esquerda = False
             self.direita = True
@@ -135,7 +135,7 @@ class Player():
             self.direita = False
             self.contagem_passos = 0'''
 
-        if keys[pygame.K_SPACE] and self.podePular:
+        if keys[pygame.K_SPACE] and self.podePular and self.rect.y > 0:
             if not self.pulando: 
                 self.pulando = True 
                 self.contador_pulo = 0
